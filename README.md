@@ -56,7 +56,7 @@ CAMP_2.0/
 │   │   └── core/       tunable CSASConfig
 │   └── tests/          unit tests (stdlib unittest) + calibration harness
 ├── frontend/       Vanilla HTML/CSS/JS dashboard (served at /app)
-├── docs/           SIGNATURE_ALGORITHM.md
+└── docs/           SIGNATURE_ALGORITHM.md
 ```
 
 ---
