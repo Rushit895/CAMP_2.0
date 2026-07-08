@@ -134,8 +134,18 @@ exactly why CO2→PO3 is a 2 and not a 3.
 ## 6. Calibration & tuning
 
 All constants — `a, b, LAMBDA_SAT (k)`, tier gate breakpoints, and `τ` — live in
-`app/core/config.py` (`CSASConfig`). They are calibrated against a labelled set of real
-COs in `tests/`. Re-tuning is a data/config change, not a code change.
+`app/core/config.py` (`CSASConfig`). Re-tuning is a data/config change, not a code change.
+
+Use the **calibration harness** to tune them against labelled COs:
+
+```bash
+python -m app.calibration.run --dataset your_labels.json --grid
+```
+
+It reports exact-match / within-±1 / MAE / bias and per-PO P/R/F1, lists every
+divergence with its `σ/λ/gate` breakdown, and grid-searches the weights/thresholds
+that best fit your labels (printing a suggested `CSASConfig`). See
+`backend/app/calibration/` and `backend/README.md`.
 
 The LLM is **not** part of scoring. It may optionally be reintroduced later purely to
 *suggest* lexicon terms for human review, or to draft prose — never to compute the matrix.

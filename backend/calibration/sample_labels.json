@@ -1,0 +1,37 @@
+{
+  "_comment": "Labelled Course Outcomes for calibrating CSAS. 'expected' holds the faculty-judged strength (1-3) for each relevant PO; any PO not listed is treated as expected 0 (no mapping). Replace with your department's real labelled COs to calibrate for your branch.",
+  "labels": [
+    {
+      "co": "Apply data structures and algorithms to solve computational problems efficiently.",
+      "expected": { "PO1": 3, "PO2": 2, "PO3": 1 }
+    },
+    {
+      "co": "Analyze the time complexity and space complexity of algorithms.",
+      "expected": { "PO1": 2, "PO2": 3, "PO4": 1 }
+    },
+    {
+      "co": "Design and develop a software system using modern engineering tools.",
+      "expected": { "PO1": 1, "PO3": 3, "PO5": 3 }
+    },
+    {
+      "co": "Evaluate the environmental impact and sustainability of engineering solutions.",
+      "expected": { "PO3": 1, "PO6": 2, "PO7": 3 }
+    },
+    {
+      "co": "Communicate technical results effectively through reports and presentations.",
+      "expected": { "PO10": 3 }
+    },
+    {
+      "co": "Work effectively as a member of a multidisciplinary project team.",
+      "expected": { "PO9": 3, "PO11": 2 }
+    },
+    {
+      "co": "Understand the ethical and professional responsibilities of an engineer.",
+      "expected": { "PO6": 1, "PO8": 3 }
+    },
+    {
+      "co": "Design experiments and interpret data to draw valid conclusions.",
+      "expected": { "PO2": 2, "PO3": 1, "PO4": 3 }
+    }
+  ]
+}

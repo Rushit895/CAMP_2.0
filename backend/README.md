@@ -79,3 +79,30 @@ weights, lexical saturation, Bloom-gate breakpoints, and the three quantization
 thresholds. Re-calibrating against real labelled COs is a config/data change, never
 a code change. The PO lexicons in `app/data/po_lexicon.json` are the other tuning
 surface — add domain terms with weights per branch/department.
+
+## Calibration harness
+
+Feed the engine faculty-labelled COs and see how well it matches that judgement,
+then let it search for the best weights/thresholds:
+
+```bash
+cd backend
+python -m app.calibration.run                       # report on the sample dataset
+python -m app.calibration.run --dataset labels.json # your labelled COs
+python -m app.calibration.run --grid                # also suggest a better config
+```
+
+Dataset format (`calibration/sample_labels.json`) — list the expected strength
+(1–3) per relevant PO; any PO omitted is treated as expected 0:
+
+```json
+{ "labels": [
+  { "co": "Design and develop ... using modern tools.",
+    "expected": { "PO1": 1, "PO3": 3, "PO5": 3 } }
+] }
+```
+
+The report gives exact-match / within-±1 / MAE / bias, per-PO precision-recall-F1,
+and a **divergence list** showing each mismatch with its `σ/λ/gate` internals so you
+know *why* it diverged. `--grid` prints a suggested `CSASConfig`. Suggestions are
+specific to the dataset you feed it — calibrate on your real COs, not the sample.
