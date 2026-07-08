@@ -8,9 +8,9 @@ from __future__ import annotations
 from contextlib import asynccontextmanager
 from pathlib import Path
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import RedirectResponse
+from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from .api.routes import router
@@ -46,10 +46,14 @@ app.include_router(router, prefix="/api")
 
 
 @app.get("/")
-def root() -> RedirectResponse:
-    return RedirectResponse(url="/app/")
+def landing() -> FileResponse:
+    """Marketing landing page. The interactive demo lives at /app."""
+    page = _FRONTEND_DIR / "landing.html"
+    if not page.is_file():
+        raise HTTPException(status_code=404, detail="Landing page not found")
+    return FileResponse(str(page))
 
 
-# Serve the static frontend at /app (mounted last so it never shadows /api).
+# Serve the static demo app at /app (mounted last so it never shadows /api or /).
 if _FRONTEND_DIR.is_dir():
     app.mount("/app", StaticFiles(directory=str(_FRONTEND_DIR), html=True), name="frontend")
