@@ -84,3 +84,11 @@ class CourseDetail(BaseModel):
     created_at: str | None
     updated_at: str | None
     matrix: list[CORowOut]
+
+
+class ExportRequest(BaseModel):
+    cos: list[str] = Field(..., min_length=1)
+    code: str | None = Field(default=None, max_length=64)
+    title: str | None = Field(default=None, max_length=256)
+    branch: str | None = Field(default=None, max_length=128)
+    semester: str | None = Field(default=None, max_length=64)

@@ -174,9 +174,47 @@ async function deleteCourse() {
   }
 }
 
+async function exportDocx() {
+  const cos = $('cosInput').value.split('\n').map((s) => s.trim()).filter(Boolean);
+  if (cos.length === 0) return toast('Nothing to export — map some COs first.', true);
+
+  const btn = $('exportBtn');
+  btn.disabled = true;
+  try {
+    const r = await fetch(API_BASE + '/export', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        cos,
+        code: $('courseCode').value.trim() || null,
+        title: $('courseTitle').value.trim() || null,
+      }),
+    });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const blob = await r.blob();
+    const disp = r.headers.get('Content-Disposition') || '';
+    const m = disp.match(/filename="?([^"]+)"?/);
+    const name = m ? m[1] : 'CO_PO_Report.docx';
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = name;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    toast('Exported ' + name);
+  } catch (e) {
+    toast('Export failed: ' + e.message, true);
+  } finally {
+    btn.disabled = false;
+  }
+}
+
 function renderMatrix(matrix) {
   $('emptyState').hidden = true;
   $('matrixWrap').hidden = false;
+  $('exportBtn').hidden = false;
 
   const code = $('courseCode').value.trim();
   const title = $('courseTitle').value.trim();
@@ -280,6 +318,7 @@ function escapeHtml(s) {
 }
 
 $('mapBtn').addEventListener('click', runMapping);
+$('exportBtn').addEventListener('click', exportDocx);
 $('saveBtn').addEventListener('click', saveCourse);
 $('savedCourses').addEventListener('change', (e) => loadCourse(e.target.value));
 $('deleteCourse').addEventListener('click', deleteCourse);
@@ -288,6 +327,7 @@ $('clearBtn').addEventListener('click', () => {
   $('matrixWrap').hidden = true;
   $('emptyState').hidden = false;
   $('inputError').hidden = true;
+  $('exportBtn').hidden = true;
   $('savedCourses').value = '';
   $('deleteCourse').hidden = true;
   lastMatrix = null;

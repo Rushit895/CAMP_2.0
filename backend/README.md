@@ -43,6 +43,7 @@ python -m uvicorn app.main:app --reload --port 8099
 - Program outcomes: `GET /api/program-outcomes`
 - Map COs (stateless): `POST /api/map`
 - Courses (persisted): `POST /api/courses`, `GET /api/courses`, `GET /api/courses/{code}`, `DELETE /api/courses/{code}`
+- Export DOCX: `POST /api/export` (from payload) · `GET /api/courses/{code}/export` (from saved course)
 
 ### Persistence
 

@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from dataclasses import replace
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Response
 from sqlalchemy.orm import Session
 
 from ..core.config import DEFAULT_CONFIG, CSASConfig
@@ -14,11 +14,22 @@ from ..models.schemas import (
     CourseDetail,
     CourseSummary,
     CourseUpsertRequest,
+    ExportRequest,
     MatrixResponse,
     ProgramOutcomeOut,
     ScoreRequest,
 )
-from ..services import course_service
+from ..services import course_service, export_service
+
+_DOCX_MIME = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+
+
+def _docx_response(data: bytes, filename: str) -> Response:
+    return Response(
+        content=data,
+        media_type=_DOCX_MIME,
+        headers={"Content-Disposition": f'attachment; filename="{filename}"'},
+    )
 
 router = APIRouter()
 
@@ -89,3 +100,26 @@ def delete_course(code: str, db: Session = Depends(get_db)) -> dict:
     if not course_service.delete_course(db, code):
         raise HTTPException(status_code=404, detail=f"Course {code!r} not found")
     return {"deleted": code}
+
+
+# ---- DOCX export ----
+
+@router.post("/export")
+def export_docx(req: ExportRequest) -> Response:
+    """Generate the CO·PO report .docx from a payload (no save required)."""
+    rows = [row.to_dict() for row in score_matrix(req.cos)]
+    meta = {"code": req.code, "title": req.title, "branch": req.branch, "semester": req.semester}
+    data = export_service.build_course_docx(meta, rows)
+    return _docx_response(data, export_service.safe_filename(req.code, req.title))
+
+
+@router.get("/courses/{code}/export")
+def export_course_docx(code: str, db: Session = Depends(get_db)) -> Response:
+    """Generate the CO·PO report .docx from a saved course."""
+    course = course_service.get_course(db, code)
+    if course is None:
+        raise HTTPException(status_code=404, detail=f"Course {code!r} not found")
+    payload = course_service.serialize_course(course)
+    meta = {k: payload[k] for k in ("code", "title", "branch", "semester")}
+    data = export_service.build_course_docx(meta, payload["matrix"])
+    return _docx_response(data, export_service.safe_filename(course.code, course.title))

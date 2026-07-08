@@ -94,5 +94,5 @@ python -m tests.calibrate      # print a sample CO·PO matrix
 | Frontend dashboard (matrix + explainability) | ✅ |
 | Persistence / database (SQLAlchemy, SQLite default) | ✅ |
 | Course CRUD + save/load in the UI | ✅ |
-| DOCX export of accreditation document | ⏳ planned |
+| DOCX export (CO·PO matrix + CSAS justification appendix) | ✅ |
 | Lexicon / threshold calibration on real COs | ⏳ ongoing |
