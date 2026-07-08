@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>CAMP2.O — CO·PO Mapping</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=2" />
 </head>
 <body>
   <header class="topbar">
@@ -29,6 +29,13 @@
         <button id="loadSample" class="link-btn">load sample</button>
       </div>
 
+      <div class="saved-bar">
+        <select id="savedCourses" class="field saved-select">
+          <option value="">— saved courses —</option>
+        </select>
+        <button id="deleteCourse" class="icon-btn" title="Delete selected course" hidden>🗑</button>
+      </div>
+
       <div class="course-meta">
         <input id="courseCode" class="field" placeholder="Course code (e.g. 21CS42)" />
         <input id="courseTitle" class="field" placeholder="Course title (e.g. Data Structures)" />
@@ -42,8 +49,10 @@ Design and develop software using modern engineering tools."></textarea>
 
       <div class="actions">
         <button id="mapBtn" class="btn btn-primary">Map to POs</button>
+        <button id="saveBtn" class="btn btn-ghost">Save</button>
         <button id="clearBtn" class="btn btn-ghost">Clear</button>
       </div>
+      <p id="toast" class="toast" hidden></p>
       <p id="inputError" class="error-text" hidden></p>
 
       <div class="legend">
@@ -91,6 +100,6 @@ Design and develop software using modern engineering tools."></textarea>
     <span>Deterministic · explainable · offline — no LLM in the scoring path.</span>
   </footer>
 
-  <script src="app.js"></script>
+  <script src="app.js?v=2"></script>
 </body>
 </html>

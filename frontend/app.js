@@ -87,6 +87,93 @@ async function runMapping() {
   }
 }
 
+// ---- Persistence: save / load / delete -----------------------------------
+function toast(msg, isErr) {
+  const t = $('toast');
+  t.textContent = msg;
+  t.className = 'toast' + (isErr ? ' toast-err' : '');
+  t.hidden = false;
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => { t.hidden = true; }, 3200);
+}
+
+async function refreshSaved(selected) {
+  try {
+    const r = await fetch(API_BASE + '/courses');
+    if (!r.ok) return;
+    const courses = await r.json();
+    const sel = $('savedCourses');
+    sel.innerHTML = '<option value="">— saved courses —</option>' +
+      courses.map((c) => '<option value="' + escapeHtml(c.code) + '">' +
+        escapeHtml(c.code + ' · ' + c.title) + ' (' + c.co_count + ' CO)</option>').join('');
+    if (selected) sel.value = selected;
+    $('deleteCourse').hidden = !sel.value;
+  } catch { /* API offline — leave dropdown as-is */ }
+}
+
+async function saveCourse() {
+  const code = $('courseCode').value.trim();
+  const title = $('courseTitle').value.trim();
+  const cos = $('cosInput').value.split('\n').map((s) => s.trim()).filter(Boolean);
+  if (!code || !title) return toast('Course code and title are required to save.', true);
+  if (cos.length === 0) return toast('Enter at least one Course Outcome.', true);
+
+  const btn = $('saveBtn');
+  btn.disabled = true;
+  try {
+    const r = await fetch(API_BASE + '/courses', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code, title, cos }),
+    });
+    if (!r.ok) {
+      const b = await r.json().catch(() => ({}));
+      throw new Error(b.detail || ('HTTP ' + r.status));
+    }
+    const data = await r.json();
+    lastMatrix = data.matrix;
+    renderMatrix(data.matrix);
+    await refreshSaved(code);
+    toast('Saved “' + code + '” with its CO·PO matrix.');
+  } catch (e) {
+    toast('Save failed: ' + e.message, true);
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+async function loadCourse(code) {
+  if (!code) { $('deleteCourse').hidden = true; return; }
+  try {
+    const r = await fetch(API_BASE + '/courses/' + encodeURIComponent(code));
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const data = await r.json();
+    $('courseCode').value = data.code;
+    $('courseTitle').value = data.title;
+    $('cosInput').value = data.matrix.map((row) => row.co).join('\n');
+    lastMatrix = data.matrix;
+    renderMatrix(data.matrix);
+    $('deleteCourse').hidden = false;
+    toast('Loaded “' + data.code + '”.');
+  } catch (e) {
+    toast('Load failed: ' + e.message, true);
+  }
+}
+
+async function deleteCourse() {
+  const code = $('savedCourses').value;
+  if (!code) return;
+  if (!confirm('Delete course “' + code + '” and its stored matrix?')) return;
+  try {
+    const r = await fetch(API_BASE + '/courses/' + encodeURIComponent(code), { method: 'DELETE' });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    await refreshSaved();
+    toast('Deleted “' + code + '”.');
+  } catch (e) {
+    toast('Delete failed: ' + e.message, true);
+  }
+}
+
 function renderMatrix(matrix) {
   $('emptyState').hidden = true;
   $('matrixWrap').hidden = false;
@@ -193,11 +280,16 @@ function escapeHtml(s) {
 }
 
 $('mapBtn').addEventListener('click', runMapping);
+$('saveBtn').addEventListener('click', saveCourse);
+$('savedCourses').addEventListener('change', (e) => loadCourse(e.target.value));
+$('deleteCourse').addEventListener('click', deleteCourse);
 $('clearBtn').addEventListener('click', () => {
   $('cosInput').value = '';
   $('matrixWrap').hidden = true;
   $('emptyState').hidden = false;
   $('inputError').hidden = true;
+  $('savedCourses').value = '';
+  $('deleteCourse').hidden = true;
   lastMatrix = null;
 });
 $('loadSample').addEventListener('click', () => { $('cosInput').value = SAMPLE; });
@@ -207,3 +299,4 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDrawe
 
 initTheme();
 checkHealth();
+refreshSaved();

@@ -5,6 +5,7 @@ See docs/SIGNATURE_ALGORITHM.md.
 """
 from __future__ import annotations
 
+from contextlib import asynccontextmanager
 from pathlib import Path
 
 from fastapi import FastAPI
@@ -13,13 +14,21 @@ from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
 from .api.routes import router
+from .db.database import init_db
 
 _FRONTEND_DIR = Path(__file__).resolve().parent.parent.parent / "frontend"
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    init_db()
+    yield
 
 app = FastAPI(
     title="CAMP2.O — Course Alignment & Mapping Portal",
     description="Deterministic CO→PO mapping powered by the CSAS signature algorithm.",
     version="1.0.0",
+    lifespan=lifespan,
 )
 
 # Frontend is served separately (static files / dev server); allow local origins.

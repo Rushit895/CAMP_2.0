@@ -19,6 +19,11 @@ env/
 .env
 *.log
 
+# --- Local database ---
+*.db
+*.sqlite
+*.sqlite3
+
 # --- OS / editor ---
 .DS_Store
 Thumbs.db

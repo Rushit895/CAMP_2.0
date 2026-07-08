@@ -55,3 +55,32 @@ class ProgramOutcomeOut(BaseModel):
     title: str
     description: str
     cognitive_tier: str
+
+
+# ---- Persistence / course models ----
+
+class CourseUpsertRequest(BaseModel):
+    code: str = Field(..., min_length=1, max_length=64)
+    title: str = Field(..., min_length=1, max_length=256)
+    cos: list[str] = Field(..., min_length=1, description="Course Outcome statements")
+    branch: str | None = Field(default=None, max_length=128)
+    semester: str | None = Field(default=None, max_length=64)
+
+
+class CourseSummary(BaseModel):
+    code: str
+    title: str
+    branch: str | None
+    semester: str | None
+    co_count: int
+    updated_at: str | None
+
+
+class CourseDetail(BaseModel):
+    code: str
+    title: str
+    branch: str | None
+    semester: str | None
+    created_at: str | None
+    updated_at: str | None
+    matrix: list[CORowOut]

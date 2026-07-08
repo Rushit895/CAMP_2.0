@@ -96,7 +96,17 @@ body {
 .muted { color: var(--muted); } .small { font-size: 12.5px; }
 
 /* Input */
+.saved-bar { display: flex; gap: 8px; margin-bottom: 14px; }
+.saved-select { flex: 1; cursor: pointer; }
 .course-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+
+.toast {
+  margin: 12px 0 0; padding: 9px 12px; border-radius: 9px; font-size: 13px; font-weight: 600;
+  background: #dcfce7; color: #166534; border: 1px solid #bbf7d0;
+}
+.toast.toast-err { background: #fee2e2; color: #991b1b; border-color: #fecaca; }
+:root[data-theme="dark"] .toast { background: #0f3d24; color: #6ee7a8; border-color: #14512f; }
+:root[data-theme="dark"] .toast.toast-err { background: #3d1414; color: #fca5a5; border-color: #5a1d1d; }
 .field, .cos-input {
   width: 100%; background: var(--panel-2); border: 1px solid var(--border);
   border-radius: 10px; padding: 10px 12px; color: var(--ink); font: inherit; outline: none;

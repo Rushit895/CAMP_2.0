@@ -92,7 +92,7 @@ python -m tests.calibrate      # print a sample CO·PO matrix
 | CSAS math engine + unit tests | ✅ |
 | FastAPI API (`/api/map`, `/api/program-outcomes`, `/api/health`) | ✅ |
 | Frontend dashboard (matrix + explainability) | ✅ |
-| Persistence / database | ⏳ planned |
+| Persistence / database (SQLAlchemy, SQLite default) | ✅ |
+| Course CRUD + save/load in the UI | ✅ |
 | DOCX export of accreditation document | ⏳ planned |
-| Course CRUD | ⏳ planned |
 | Lexicon / threshold calibration on real COs | ⏳ ongoing |

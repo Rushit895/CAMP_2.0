@@ -41,7 +41,15 @@ python -m uvicorn app.main:app --reload --port 8099
 - API docs (Swagger): http://127.0.0.1:8099/docs
 - Health: `GET /api/health`
 - Program outcomes: `GET /api/program-outcomes`
-- Map COs: `POST /api/map`
+- Map COs (stateless): `POST /api/map`
+- Courses (persisted): `POST /api/courses`, `GET /api/courses`, `GET /api/courses/{code}`, `DELETE /api/courses/{code}`
+
+### Persistence
+
+Saving a course (`POST /api/courses`) computes its CSAS matrix and stores every
+cell with full explainability in a database (SQLite by default at `backend/../camp.db`).
+Point `CAMP_DB_URL` at Postgres/MariaDB for a real deployment — nothing else changes.
+Schema: `courses` → `course_outcomes` → `co_po_cells` (see `app/db/models.py`).
 
 ### Example
 

@@ -1,5 +1,8 @@
 # CAMP2.O backend.
-# The CSAS math engine (app/engine) is pure stdlib — these are only for the API layer.
+# The CSAS math engine (app/engine) is pure stdlib — these are only for the API/DB layer.
 fastapi==0.115.6
 uvicorn[standard]==0.34.0
 pydantic==2.10.4
+SQLAlchemy>=2.0
+# test-only:
+httpx>=0.27
