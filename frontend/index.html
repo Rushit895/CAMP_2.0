@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CAMP2.O — CO·PO Mapping</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">◈</span>
+      <div>
+        <h1>CAMP<span class="accent">2.O</span></h1>
+        <p class="tag">Course Alignment &amp; Mapping Portal · <span class="algo">CSAS engine</span></p>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <span id="apiStatus" class="pill pill-muted">checking API…</span>
+      <button id="themeToggle" class="icon-btn" title="Toggle theme" aria-label="Toggle theme">☾</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <!-- Input panel -->
+    <section class="panel input-panel">
+      <div class="panel-head">
+        <h2>Course Outcomes</h2>
+        <button id="loadSample" class="link-btn">load sample</button>
+      </div>
+
+      <div class="course-meta">
+        <input id="courseCode" class="field" placeholder="Course code (e.g. 21CS42)" />
+        <input id="courseTitle" class="field" placeholder="Course title (e.g. Data Structures)" />
+      </div>
+
+      <label class="lbl" for="cosInput">One Course Outcome per line</label>
+      <textarea id="cosInput" class="cos-input" spellcheck="false"
+        placeholder="Apply data structures and algorithms to solve computational problems.
+Analyze the time and space complexity of algorithms.
+Design and develop software using modern engineering tools."></textarea>
+
+      <div class="actions">
+        <button id="mapBtn" class="btn btn-primary">Map to POs</button>
+        <button id="clearBtn" class="btn btn-ghost">Clear</button>
+      </div>
+      <p id="inputError" class="error-text" hidden></p>
+
+      <div class="legend">
+        <span class="legend-title">Strength</span>
+        <span class="chip lvl-0">0 None</span>
+        <span class="chip lvl-1">1 Low</span>
+        <span class="chip lvl-2">2 Med</span>
+        <span class="chip lvl-3">3 High</span>
+      </div>
+    </section>
+
+    <!-- Results panel -->
+    <section class="panel result-panel">
+      <div class="panel-head">
+        <h2>CO · PO Matrix</h2>
+        <span id="resultMeta" class="muted"></span>
+      </div>
+
+      <div id="emptyState" class="empty">
+        <div class="empty-mark">◈</div>
+        <p>Enter Course Outcomes and press <strong>Map to POs</strong>.</p>
+        <p class="muted small">Every score is computed by the deterministic CSAS math — click any cell to see why.</p>
+      </div>
+
+      <div id="matrixWrap" class="matrix-wrap" hidden>
+        <table id="matrix" class="matrix">
+          <thead></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- Cell detail drawer -->
+  <aside id="drawer" class="drawer" hidden>
+    <div class="drawer-head">
+      <h3 id="drawerTitle">Detail</h3>
+      <button id="drawerClose" class="icon-btn" aria-label="Close">✕</button>
+    </div>
+    <div id="drawerBody" class="drawer-body"></div>
+  </aside>
+  <div id="scrim" class="scrim" hidden></div>
+
+  <footer class="footer">
+    <span>Deterministic · explainable · offline — no LLM in the scoring path.</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

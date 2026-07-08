@@ -1,0 +1,85 @@
+{
+  "_comment": "Curated weighted lexicons per PO. Terms are written in natural English and normalized (stemmed) at load time to match the CO preprocessor. Weight in (0,1] = how strongly the term signals that PO. Multi-word terms match when all their tokens are present in the CO.",
+  "lexicons": {
+    "PO1": {
+      "mathematics": 1.0, "mathematical": 1.0, "science": 0.8, "scientific": 0.8,
+      "fundamentals": 0.9, "principles": 0.8, "theory": 0.7, "theorem": 0.8,
+      "equation": 0.8, "formula": 0.7, "calculus": 0.9, "algebra": 0.9,
+      "probability": 0.8, "statistics": 0.8, "physics": 0.8, "chemistry": 0.7,
+      "engineering knowledge": 1.0, "concept": 0.6, "law": 0.6, "model": 0.6,
+      "algorithm": 0.8, "data structure": 0.8, "computation": 0.7, "computational": 0.7,
+      "programming": 0.6, "logic": 0.7, "discrete": 0.7, "computing": 0.6
+    },
+    "PO2": {
+      "analyze": 1.0, "analysis": 1.0, "problem": 0.9, "identify": 0.8,
+      "formulate": 0.9, "complexity": 0.9, "performance": 0.7, "diagnose": 0.8,
+      "root cause": 0.9, "reasoning": 0.8, "conclusion": 0.7, "evaluate": 0.6,
+      "compare": 0.6, "examine": 0.7, "investigate": 0.6, "interpret": 0.6,
+      "time complexity": 0.9, "space complexity": 0.9, "efficiency": 0.7,
+      "efficient": 0.6, "solve": 0.6, "problem solving": 0.8, "optimize": 0.7
+    },
+    "PO3": {
+      "design": 1.0, "develop": 0.9, "development": 0.9, "solution": 0.8,
+      "architecture": 0.8, "system": 0.6, "component": 0.7, "prototype": 0.8,
+      "build": 0.7, "construct": 0.7, "implement": 0.6, "algorithm": 0.6,
+      "framework": 0.6, "specification": 0.7, "requirement": 0.6, "structure": 0.6,
+      "data structure": 0.7, "process": 0.5, "module": 0.6, "interface": 0.6
+    },
+    "PO4": {
+      "research": 1.0, "experiment": 1.0, "investigation": 0.9, "investigate": 0.9,
+      "data": 0.7, "dataset": 0.8, "interpretation": 0.8, "hypothesis": 0.9,
+      "empirical": 0.8, "observation": 0.7, "measurement": 0.7, "validate": 0.7,
+      "testing": 0.6, "methodology": 0.7, "sampling": 0.7, "analysis of data": 0.9,
+      "design of experiments": 1.0, "survey": 0.6, "case study": 0.7
+    },
+    "PO5": {
+      "tool": 1.0, "software": 0.9, "technique": 0.8, "modern": 0.6,
+      "simulation": 0.9, "modeling": 0.8, "platform": 0.7, "library": 0.7,
+      "framework": 0.7, "ide": 0.7, "programming": 0.7, "language": 0.5,
+      "matlab": 0.9, "python": 0.8, "java": 0.7, "database": 0.7,
+      "cloud": 0.7, "automation": 0.7, "resource": 0.5, "prediction": 0.6
+    },
+    "PO6": {
+      "society": 1.0, "societal": 1.0, "safety": 0.9, "health": 0.8,
+      "legal": 0.9, "law": 0.7, "cultural": 0.8, "public": 0.7,
+      "welfare": 0.8, "responsibility": 0.7, "policy": 0.7, "regulation": 0.7,
+      "social": 0.8, "community": 0.7, "human": 0.5, "context": 0.5
+    },
+    "PO7": {
+      "environment": 1.0, "environmental": 1.0, "sustainability": 1.0, "sustainable": 1.0,
+      "green": 0.8, "ecology": 0.8, "ecological": 0.8, "pollution": 0.8,
+      "energy": 0.7, "renewable": 0.9, "carbon": 0.8, "climate": 0.8,
+      "waste": 0.7, "conservation": 0.8, "impact": 0.5, "ecosystem": 0.8
+    },
+    "PO8": {
+      "ethics": 1.0, "ethical": 1.0, "integrity": 0.9, "professional": 0.7,
+      "responsibility": 0.8, "moral": 0.9, "norm": 0.7, "conduct": 0.8,
+      "plagiarism": 0.8, "honesty": 0.8, "accountability": 0.8, "privacy": 0.7,
+      "compliance": 0.7, "code of conduct": 0.9, "fairness": 0.7
+    },
+    "PO9": {
+      "team": 1.0, "teamwork": 1.0, "collaboration": 0.9, "collaborate": 0.9,
+      "leader": 0.8, "leadership": 0.8, "group": 0.7, "individual": 0.6,
+      "member": 0.7, "diverse": 0.7, "coordination": 0.7, "cooperation": 0.7,
+      "multidisciplinary": 0.8, "role": 0.5, "peer": 0.6
+    },
+    "PO10": {
+      "communicate": 1.0, "communication": 1.0, "report": 0.8, "presentation": 0.9,
+      "documentation": 0.8, "document": 0.7, "write": 0.6, "writing": 0.7,
+      "present": 0.7, "articulate": 0.7, "express": 0.6, "explain": 0.5,
+      "verbal": 0.7, "visual": 0.5, "audience": 0.7, "comprehend": 0.5
+    },
+    "PO11": {
+      "project": 1.0, "management": 1.0, "manage": 0.9, "finance": 1.0,
+      "financial": 0.9, "cost": 0.8, "budget": 0.9, "planning": 0.8,
+      "schedule": 0.8, "resource": 0.6, "risk": 0.7, "economics": 0.8,
+      "leadership": 0.6, "estimation": 0.7, "project management": 1.0, "roi": 0.7
+    },
+    "PO12": {
+      "learning": 1.0, "lifelong": 1.0, "independent": 0.8, "self": 0.6,
+      "continuous": 0.8, "update": 0.6, "emerging": 0.8, "trend": 0.7,
+      "adapt": 0.7, "growth": 0.6, "curiosity": 0.7, "knowledge": 0.5,
+      "life-long learning": 1.0, "upskill": 0.8, "new technology": 0.7
+    }
+  }
+}

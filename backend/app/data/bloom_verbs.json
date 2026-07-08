@@ -1,0 +1,29 @@
+{
+  "_comment": "Bloom's Revised Taxonomy action verbs by cognitive level (1=Remember .. 6=Create). Stored as natural verbs; both these and CO tokens are run through the same verb-canonicalizer (preprocess._verb_key) before matching, so all inflections (analyze/analyzing/analyzed) unify.",
+  "levels": {
+    "1": {
+      "name": "Remember",
+      "verbs": ["define", "list", "recall", "remember", "identify", "state", "name", "label", "recognize", "reproduce", "select", "match", "cite", "quote", "record"]
+    },
+    "2": {
+      "name": "Understand",
+      "verbs": ["explain", "describe", "summarize", "interpret", "discuss", "understand", "classify", "compare", "illustrate", "paraphrase", "restate", "translate", "infer", "exemplify", "outline", "review"]
+    },
+    "3": {
+      "name": "Apply",
+      "verbs": ["apply", "implement", "demonstrate", "solve", "use", "practice", "execute", "compute", "calculate", "operate", "employ", "show", "model", "simulate", "sketch"]
+    },
+    "4": {
+      "name": "Analyze",
+      "verbs": ["analyze", "examine", "investigate", "distinguish", "differentiate", "categorize", "diagnose", "correlate", "deconstruct", "test", "experiment", "inspect", "probe", "dissect", "contrast"]
+    },
+    "5": {
+      "name": "Evaluate",
+      "verbs": ["evaluate", "critique", "justify", "assess", "appraise", "recommend", "validate", "judge", "defend", "prioritize", "rank", "measure", "benchmark", "audit", "verify"]
+    },
+    "6": {
+      "name": "Create",
+      "verbs": ["create", "design", "develop", "invent", "construct", "assemble", "formulate", "compose", "devise", "propose", "generate", "architect", "synthesize", "plan", "build", "produce", "engineer", "integrate", "optimize"]
+    }
+  }
+}
