@@ -52,6 +52,23 @@ class BloomGateTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             bloom_gate("nonsense", 3, DEFAULT_CONFIG)
 
+    def test_gate_floor_lifts_low_gates(self):
+        floored = CSASConfig(gate_floor=0.5)
+        # a Bloom-1 higher-order gate is ~0 by default; the floor lifts it to >= 0.5
+        strict = bloom_gate("higher_order", 1, DEFAULT_CONFIG)
+        lifted = bloom_gate("higher_order", 1, floored)
+        self.assertLess(strict, 0.1)
+        self.assertGreaterEqual(lifted, 0.5)
+        # floor never exceeds 1.0 even for professional tier
+        self.assertEqual(bloom_gate("professional", 3, floored), 1.0)
+
+    def test_gate_floor_default_is_noop(self):
+        for tier in ("knowledge", "higher_order", "application"):
+            for b in range(1, 7):
+                self.assertAlmostEqual(
+                    bloom_gate(tier, b, DEFAULT_CONFIG),
+                    bloom_gate(tier, b, CSASConfig(gate_floor=0.0)))
+
 
 class DeterminismTests(unittest.TestCase):
     def test_same_input_same_output(self):

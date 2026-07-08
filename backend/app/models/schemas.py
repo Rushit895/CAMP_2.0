@@ -9,6 +9,7 @@ class ConfigOverride(BaseModel):
     semantic_weight: float | None = Field(default=None, ge=0.0, le=1.0)
     lexical_weight: float | None = Field(default=None, ge=0.0, le=1.0)
     lambda_saturation: float | None = Field(default=None, gt=0.0)
+    gate_floor: float | None = Field(default=None, ge=0.0, lt=1.0)
     tau1: float | None = Field(default=None, gt=0.0, lt=1.0)
     tau2: float | None = Field(default=None, gt=0.0, lt=1.0)
     tau3: float | None = Field(default=None, gt=0.0, lt=1.0)

@@ -96,4 +96,5 @@ python -m tests.calibrate      # print a sample CO·PO matrix
 | Course CRUD + save/load in the UI | ✅ |
 | DOCX export (CO·PO matrix + CSAS justification appendix) | ✅ |
 | Calibration harness (labelled-CO eval + grid search) | ✅ |
-| Lexicon / threshold calibration on real COs | ⏳ ongoing (use the harness) |
+| Calibrated on real course data (ML syllabus) | ✅ see [docs/CALIBRATION_FINDINGS.md](docs/CALIBRATION_FINDINGS.md) |
+| Lexicon / threshold calibration on more branches | ⏳ ongoing (use the harness) |

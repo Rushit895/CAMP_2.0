@@ -84,7 +84,10 @@ def _quantize(raw: float, cfg: CSASConfig) -> int:
 
 
 def _predict(cell: _Cell, cfg: CSASConfig) -> int:
-    raw = (cfg.semantic_weight * cell.sigma + cfg.lexical_weight * cell.lam) * cell.gate
+    # cell.gate is the raw gate (components cached at the default gate_floor=0);
+    # apply the candidate floor analytically: gate = floor + (1-floor)*raw.
+    gate = cfg.gate_floor + (1.0 - cfg.gate_floor) * cell.gate
+    raw = (cfg.semantic_weight * cell.sigma + cfg.lexical_weight * cell.lam) * gate
     return _quantize(raw, cfg)
 
 
@@ -226,6 +229,7 @@ _DEFAULT_GRID = {
     "tau1": [0.08, 0.10, 0.12, 0.14, 0.16],
     "tau2": [0.24, 0.28, 0.32, 0.36],
     "tau3": [0.42, 0.48, 0.54, 0.60],
+    "gate_floor": [0.0, 0.2, 0.35, 0.5],
 }
 
 
@@ -260,11 +264,13 @@ def grid_search(dataset: list[LabeledCO], grid: dict | None = None) -> GridResul
     best_exact, best_mae = base_exact, base_mae
     evaluated = 0
 
-    for a, t1, t2, t3 in itertools.product(g["a"], g["tau1"], g["tau2"], g["tau3"]):
+    for a, t1, t2, t3, gf in itertools.product(
+        g["a"], g["tau1"], g["tau2"], g["tau3"], g.get("gate_floor", [0.0])
+    ):
         if not (t1 < t2 < t3):
             continue
         cfg = replace(DEFAULT_CONFIG, semantic_weight=a, lexical_weight=round(1 - a, 4),
-                      tau1=t1, tau2=t2, tau3=t3)
+                      tau1=t1, tau2=t2, tau3=t3, gate_floor=gf)
         evaluated += 1
         exact, mae = _score_config(comps, cfg)
         if (exact > best_exact) or (exact == best_exact and mae < best_mae):

@@ -68,6 +68,7 @@ def _print_grid(result) -> None:
         print(f"    semantic_weight = {b.semantic_weight}")
         print(f"    lexical_weight  = {b.lexical_weight}")
         print(f"    tau1, tau2, tau3 = {b.tau1}, {b.tau2}, {b.tau3}")
+        print(f"    gate_floor      = {b.gate_floor}")
     else:
         print("\n  Default config already optimal on this dataset. No change suggested.")
     print()

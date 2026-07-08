@@ -26,7 +26,11 @@ def smoothstep(x: float) -> float:
 
 
 def bloom_gate(tier: str, bloom_level: int, cfg: CSASConfig) -> float:
-    """Return the cognitive gate g(beta) in [0,1] for a PO's tier."""
+    """Return the cognitive gate g(beta) in [0,1] for a PO's tier.
+
+    A configurable floor lifts every non-professional gate so that cognition
+    down-weights rather than vetoes: gate = floor + (1 - floor) * gate_raw.
+    """
     if tier not in VALID_TIERS:
         raise ValueError(f"unknown cognitive tier: {tier!r}")
 
@@ -39,12 +43,13 @@ def bloom_gate(tier: str, bloom_level: int, cfg: CSASConfig) -> float:
 
     if tier == "knowledge":
         # PO1 always contributes; rigor lifts it. Floor 0.5, ceiling 1.0.
-        return 0.5 + 0.5 * beta
-
-    if tier == "higher_order":
+        raw = 0.5 + 0.5 * beta
+    elif tier == "higher_order":
         lo, hi = cfg.higher_order_lo, cfg.higher_order_hi
-        return smoothstep((beta - lo) / (hi - lo))
+        raw = smoothstep((beta - lo) / (hi - lo))
+    else:  # application
+        lo, hi = cfg.application_lo, cfg.application_hi
+        raw = smoothstep((beta - lo) / (hi - lo))
 
-    # application
-    lo, hi = cfg.application_lo, cfg.application_hi
-    return smoothstep((beta - lo) / (hi - lo))
+    floor = cfg.gate_floor
+    return floor + (1.0 - floor) * raw

@@ -1,0 +1,29 @@
+{
+  "_comment": "REAL labelled data: Course 'Machine Learning and Applications' (B22EF0504, V Sem). COs and expected CO->PO levels taken verbatim from the official Course Articulation Matrix in the syllabus (1=Low, 2=Medium, 3=High). PSO1-3 columns are omitted (CSAS scores PO1-PO12 only). Faculty mapped every CO to PO1-PO5 and PO12.",
+  "labels": [
+    {
+      "co": "Understand basics of Artificial Intelligence and Machine Learning.",
+      "expected": { "PO1": 3, "PO2": 2, "PO3": 2, "PO4": 2, "PO5": 3, "PO12": 3 }
+    },
+    {
+      "co": "Apply supervised learning algorithm for regression and classification problems.",
+      "expected": { "PO1": 3, "PO2": 3, "PO3": 2, "PO4": 3, "PO5": 3, "PO12": 3 }
+    },
+    {
+      "co": "Use unsupervised learning algorithms to identify patterns and structure in unlabelled datasets.",
+      "expected": { "PO1": 3, "PO2": 2, "PO3": 2, "PO4": 3, "PO5": 3, "PO12": 3 }
+    },
+    {
+      "co": "Analyze real world applications using supervised and unsupervised learning algorithms.",
+      "expected": { "PO1": 3, "PO2": 3, "PO3": 3, "PO4": 2, "PO5": 3, "PO12": 3 }
+    },
+    {
+      "co": "Analyze the performance of machine learning models using different evaluation metrics.",
+      "expected": { "PO1": 3, "PO2": 2, "PO3": 3, "PO4": 3, "PO5": 3, "PO12": 3 }
+    },
+    {
+      "co": "Explain dimensionality reduction algorithms and its applications.",
+      "expected": { "PO1": 3, "PO2": 3, "PO3": 3, "PO4": 2, "PO5": 3, "PO12": 3 }
+    }
+  ]
+}
